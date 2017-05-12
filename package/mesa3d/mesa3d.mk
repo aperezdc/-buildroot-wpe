@@ -5,7 +5,7 @@
 ################################################################################
 
 # When updating the version, please also update mesa3d-headers
-MESA3D_VERSION = 17.0.1
+MESA3D_VERSION = 17.0.6
 MESA3D_SOURCE = mesa-$(MESA3D_VERSION).tar.xz
 MESA3D_SITE = https://mesa.freedesktop.org/archive
 MESA3D_LICENSE = MIT, SGI, Khronos
@@ -21,6 +21,14 @@ MESA3D_DEPENDENCIES = \
 	host-flex \
 	expat \
 	libdrm
+
+ifeq ($(BR2_PACKAGE_LLVM),y)
+MESA3D_DEPENDENCIES += elfutils llvm
+MESA3D_CONF_OPTS += --enable-gallium-llvm=yes
+else
+MESA3D_CONF_OPTS += --enable-llvm-shared-libs=no \
+					--enable-gallium-llvm=no
+endif
 
 # The Sourcery MIPS toolchain has a special (non-upstream) feature to
 # have "compact exception handling", which unfortunately breaks with
@@ -184,6 +192,6 @@ MESA3D_CONF_OPTS += --disable-gles1 --disable-gles2
 endif
 
 # Avoid automatic search of llvm-config
-MESA3D_CONF_OPTS += --with-llvm-prefix=$(STAGING_DIR)/usr/bin
+MESA3D_CONF_OPTS += --with-llvm-prefix=$(STAGING_DIR)/usr
 
 $(eval $(autotools-package))

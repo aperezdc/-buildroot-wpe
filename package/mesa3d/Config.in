@@ -15,6 +15,7 @@ menuconfig BR2_PACKAGE_MESA3D
 	select BR2_PACKAGE_XLIB_LIBXDAMAGE if BR2_PACKAGE_XORG7
 	select BR2_PACKAGE_XLIB_LIBXFIXES if BR2_PACKAGE_XORG7
 	select BR2_PACKAGE_LIBXCB if BR2_PACKAGE_XORG7
+	select BR2_PACKAGE_LLVM_ENABLE_RTTI if BR2_PACKAGE_LLVM
 	help
 	  Mesa 3D, an open-source implementation of the OpenGL specification.
 
