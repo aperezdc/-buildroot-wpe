@@ -1,0 +1,28 @@
+menuconfig BR2_PACKAGE_HOST_LLVM
+	bool "host llvm"
+	depends on BR2_arm || BR2_armeb || BR2_aarch64 || \
+		BR2_i386 || BR2_x86_64 || \
+		BR2_mips || BR2_mipsel || \
+		BR2_mips64 || BR2_mips64el || \
+		BR2_powerpc || BR2_powerpc64 || BR2_powerpc64le || \
+		BR2_sparc
+	help
+		The LLVM Project is a collection of modular and reusable compiler
+		and toolchain technologies.
+
+		http://llvm.org
+
+if BR2_PACKAGE_HOST_LLVM
+
+config BR2_PACKAGE_HOST_LLVM_TBLGEN_ONLY
+	bool "Build only llvm-tblgen"
+	help
+		The llvm-tblgen tool is needed when cross-compiling LLVM for the
+		target. If LLVM is not needed by any host tools, if it possible to
+		select this option to speed up the build.
+
+		NOTE: Normally LLVM builds a native llvm-tblgen as part of the normal
+		build procedure. Using this option should not be normally needed, use
+		it only if you know what you are doing!
+
+endif

@@ -1,0 +1,41 @@
+menuconfig BR2_PACKAGE_LLVM
+	bool "llvm"
+	depends on BR2_arm || BR2_armeb || BR2_aarch64 || \
+		BR2_i386 || BR2_x86_64 || \
+		BR2_mips || BR2_mipsel || \
+		BR2_mips64 || BR2_mips64el || \
+		BR2_powerpc || BR2_powerpc64 || BR2_powerpc64le || \
+		BR2_sparc
+	depends on BR2_INSTALL_LIBSTDCPP
+	help
+		The LLVM Project is a collection of modular and reusable compiler
+		and toolchain technologies.
+
+		http://llvm.org
+
+comment "llvm requires a toolchain with C++ support"
+	depends on !BR2_INSTALL_LIBSTDCPP
+
+if BR2_PACKAGE_LLVM
+
+config BR2_PACKAGE_LLVM_ENABLE_FFI
+	bool "Support libffi"
+	default n
+	select BR2_PACKAGE_LIBFFI
+	help
+		Use libffi in the LLVM Interpreter in order to enable calling
+		external functions.
+
+config BR2_PACKAGE_LLVM_ENABLE_RTTI
+	bool "C++: Support RTTI"
+	default n
+	help
+		Enable support for C++ Run-Time Type Information (RTTI)
+
+config BR2_PACKAGE_LLVM_ENABLE_EH
+	bool "C++: Support exception handling"
+	default n
+	help
+		Enable support for C++ exception handling (try/catch)
+
+endif
