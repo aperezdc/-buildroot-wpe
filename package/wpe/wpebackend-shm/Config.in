@@ -1,0 +1,13 @@
+config BR2_PACKAGE_WPEBACKEND_SHM
+	bool "wpebackend-shm"
+	select BR2_PACKAGE_HAS_WPEBACKEND_IMPLEMENTATION
+	#select BR2_PACKAGE_WPEBACKEND if !BR2_PACKAGE_WPEWEBKIT_ONLY_JSC
+	select BR2_PACKAGE_WAYLAND
+	help
+		WPEBackend implementation which uses rendering buffers in shared
+		memory. This backend is suitable for headless operation.
+
+if BR2_PACKAGE_WPEBACKEND_SHM
+config BR2_PACKAGE_PROVIDES_WPEBACKEND_IMPLEMENTATION
+	default "wpebackend-shm"
+endif

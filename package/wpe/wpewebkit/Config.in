@@ -1,7 +1,6 @@
 config BR2_PACKAGE_WPEWEBKIT
 	bool "wpe"
 	select BR2_PACKAGE_WPEBACKEND if !BR2_PACKAGE_WPEWEBKIT_ONLY_JSC
-	select BR2_PACKAGE_WPEBACKEND_RDK if !BR2_PACKAGE_WPEWEBKIT_ONLY_JSC
 	select BR2_PACKAGE_LIBGLIB2
 	select BR2_PACKAGE_CAIRO if !BR2_PACKAGE_WPEWEBKIT_ONLY_JSC
 	select BR2_PACKAGE_CAIRO_PNG if !BR2_PACKAGE_WPEWEBKIT_ONLY_JSC
@@ -61,6 +60,33 @@ config BR2_PACKAGE_WPEWEBKIT_ENABLE_LOGGING
 	  Enable logging for non debug builds.
 
 if !BR2_PACKAGE_WPEWEBKIT_ONLY_JSC
+
+source "package/wpe/wpebackend/Config.in"
+source "package/wpe/wpebackend-implementation/Config.in"
+source "package/wpe/wpebackend-fix-symlink/Config.in"
+source "package/wpe/wpebackend-rdk/Config.in"
+source "package/wpe/wpebackend-shm/Config.in"
+
+config BR2_PACKAGE_WPEWEBKIT_DEFAULT_WPEBACKEND
+	string
+	default "rdk" if BR2_PACKAGE_WPEWEBKIT_DEFAULT_WPEBACKEND_rdk
+	default "shm" if BR2_PACKAGE_WPEWEBKIT_DEFAULT_WPEBACKEND_shm
+
+choice
+	prompt "default wpebackend implementation"
+	default BR2_PACKAGE_WPEWEBKIT_DEFAULT_WPEBACKEND_shm
+	help
+		Set the default WPEBackend implementation.
+
+config BR2_PACKAGE_WPEWEBKIT_DEFAULT_WPEBACKEND_rdk
+	bool "wpebackend-rdk"
+	depends on BR2_PACKAGE_WPEBACKEND_RDK
+
+config BR2_PACKAGE_WPEWEBKIT_DEFAULT_WPEBACKEND_shm
+	bool "wpebackend-shm"
+	select BR2_PACKAGE_WPEBACKEND_SHM
+
+endchoice
 
 config BR2_PACKAGE_WPEWEBKIT_ENABLE_MEDIA_STREAM
 	depends on BR2_PACKAGE_OPENWEBRTC

@@ -1,4 +1,10 @@
 config BR2_PACKAGE_WPEBACKEND_RDK
 	bool "wpebackend-rdk"
+	select BR2_PACKAGE_HAS_WPEBACKEND_IMPLEMENTATION
 	help
 	  RDK-specific implementations of the WPEBackend interfaces.
+
+if BR2_PACKAGE_WPEBACKEND_RDK
+config BR2_PACKAGE_PROVIDES_WPEBACKEND_IMPLEMENTATION
+	default "wpebackend-rdk"
+endif
