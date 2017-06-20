@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-NODEJS_VERSION = 7.7.2
+NODEJS_VERSION = 8.0.0
 NODEJS_SOURCE = node-v$(NODEJS_VERSION).tar.xz
 NODEJS_SITE = http://nodejs.org/dist/v$(NODEJS_VERSION)
 NODEJS_DEPENDENCIES = host-python host-nodejs zlib \
@@ -139,12 +139,9 @@ define NODEJS_BUILD_CMDS
 endef
 
 #
-# Build the list of modules to install based on the booleans for
-# popular modules, as well as the "additional modules" list.
+# Build the list of modules to install.
 #
 NODEJS_MODULES_LIST= $(call qstrip,\
-	$(if $(BR2_PACKAGE_NODEJS_MODULES_EXPRESS),express) \
-	$(if $(BR2_PACKAGE_NODEJS_MODULES_COFFEESCRIPT),coffee-script) \
 	$(BR2_PACKAGE_NODEJS_MODULES_ADDITIONAL))
 
 # Define NPM for other packages to use
