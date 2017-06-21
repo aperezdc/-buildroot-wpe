@@ -1,0 +1,27 @@
+config BR2_PACKAGE_SMEM
+	bool "smem"
+	help
+	  Smem is a tool to generate memory usage reports on Linux
+	  systems. Unlike other tools, smem can report proportional
+	  set size (PSS), which is a more meaningful representation
+	  of the amount of memory used by libraries and applications
+	  in a virtual memory system.
+
+	  https://www.selenic.com/smem/
+
+if BR2_PACKAGE_SMEM
+
+config BR2_PACKAGE_SMEM_ONLY_SMEMCAP
+	bool "Build only smemcap"
+	help
+	  Provide only the smemcap tool to capture memory information.
+	  The resulting capture files can be analyzed using smem in
+	  another machine.
+
+config BR2_PACKAGE_SMEM_ONLY_SMEMCAP_NO_PYTHON2
+	bool
+	default y
+	depends on !BR2_PACKAGE_PYTHON2
+	select BR2_PACKAGE_SMEM_ONLY_SMEMCAP
+
+endif
