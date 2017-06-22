@@ -5,7 +5,6 @@ readonly TARGET=$1
 readonly OPTDIR='output/opt/wpe'
 readonly ARGV0=${0##*/}
 declare -a WPE_BINARIES=(
-	"${TARGET}/usr/bin/WPELauncher"
 	"${TARGET}/usr/bin/WPEDatabaseProcess"
 	"${TARGET}/usr/bin/WPENetworkProcess"
 	"${TARGET}/usr/bin/WPEWebProcess"
