@@ -1,0 +1,56 @@
+diff --git a/Source/WebCore/platform/graphics/wpe/GLContextWPE.cpp b/Source/WebCore/platform/graphics/wpe/GLContextWPE.cpp
+index 31afad7..71236ec 100644
+--- a/Source/WebCore/platform/graphics/wpe/GLContextWPE.cpp
++++ b/Source/WebCore/platform/graphics/wpe/GLContextWPE.cpp
+@@ -44,6 +44,7 @@ static const EGLenum gEGLAPIVersion = EGL_OPENGL_ES_API;
+ static const EGLenum gEGLAPIVersion = EGL_OPENGL_API;
+ #endif
+ 
++#define ALWAYS_USE_RGB565 1
+ 
+ std::unique_ptr<GLContextWPE> GLContextWPE::createContext(PlatformDisplay& platformDisplay, EGLNativeWindowType window, bool isSharing, std::unique_ptr<GLContext::Data>&& contextData)
+ {
+@@ -218,6 +219,35 @@ PlatformGraphicsContext3D GLContextWPE::platformContext()
+ 
+ bool GLContextWPE::getEGLConfig(EGLDisplay display, EGLConfig* config, EGLSurfaceType surfaceType)
+ {
++#if ALWAYS_USE_RGB565
++    // FIXME(gyuyoung): This is a temporary solution. We should find a config for RGB565 through original code.
++    EGLint numConfigs;
++    eglGetConfigs(display, 0, 0, &numConfigs);
++
++    EGLConfig configs[numConfigs];
++    eglGetConfigs(display, configs, numConfigs, &numConfigs);
++
++    EGLint red, green, blue;
++    EGLint expectedRed = 5;
++    EGLint expectedGreen = 6;
++    EGLint expectedBlue = 5;
++    for (int i = 0; i < numConfigs; i++) {
++        EGLConfig tempConfig = configs[i];
++
++        eglGetConfigAttrib(display, tempConfig, EGL_RED_SIZE, &red);
++        if (red != expectedRed)
++            continue;
++        eglGetConfigAttrib(display, tempConfig, EGL_GREEN_SIZE, &green);
++        if (green != expectedGreen)
++            continue;
++        eglGetConfigAttrib(display, tempConfig, EGL_BLUE_SIZE, &blue);
++        if (blue != expectedBlue)
++            continue;
++        *config = tempConfig;
++        return true;
++    }
++    return false;
++#else
+     EGLint attributeList[] = {
+ #if USE(OPENGL_ES_2)
+         EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+@@ -244,6 +274,7 @@ bool GLContextWPE::getEGLConfig(EGLDisplay display, EGLConfig* config, EGLSurfac
+ 
+     EGLint numberConfigsReturned;
+     return eglChooseConfig(display, attributeList, config, 1, &numberConfigsReturned) && numberConfigsReturned;
++#endif
+ }
+ 
+ } // namespace WebCore
