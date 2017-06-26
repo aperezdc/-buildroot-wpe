@@ -1,5 +1,5 @@
 #! /bin/bash
-set -euf -o pipefail
+set -ef -o pipefail
 
 readonly TARGET=$1
 readonly OPTDIR='output/opt/wpe'
