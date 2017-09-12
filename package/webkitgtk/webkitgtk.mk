@@ -30,6 +30,10 @@ WEBKITGTK_CONF_OPTS = \
 # i386 & x86_64 don't seem to have any special requirements
 ifeq ($(BR2_ARM_CPU_HAS_NEON)$(BR2_i386)$(BR2_x86_64),y)
 WEBKITGTK_CONF_OPTS += -DENABLE_JIT=ON
+# The sampling profiler is enabled alongside JIT, but does not work with Musl.
+ifeq ($(BR2_TOOLCHAIN_USES_MUSL),y)
+WEBKITGTK_CONF_OPTS += -DENABLE_SAMPLING_PROFILER=OFF
+endif
 else
 WEBKITGTK_CONF_OPTS += -DENABLE_JIT=OFF
 endif
