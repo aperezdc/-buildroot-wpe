@@ -1144,6 +1144,7 @@ menu "Graphics"
 	source "package/wayland-protocols/Config.in"
 	source "package/webkitgtk/Config.in"
 	source "package/webp/Config.in"
+	source "package/wpe/Config.in"
 	source "package/zbar/Config.in"
 	source "package/zxing-cpp/Config.in"
 endmenu
