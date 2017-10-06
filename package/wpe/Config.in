@@ -1,1 +1,2 @@
 source "package/wpe/wpebackend/Config.in"
+source "package/wpe/wpewebkit/Config.in"

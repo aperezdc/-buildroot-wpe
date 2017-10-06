@@ -1,0 +1,14 @@
+comment "wpebackend-fdo requires an EGL provider w/ Wayland-EGL, wayland"
+	depends on !BR2_PACKAGE_HAS_LIBGLES || !BR2_PACKAGE_HAS_LIBEGL_WAYLAND || !BR2_PACKAGE_WAYLAND
+
+config BR2_PACKAGE_WPEBACKEND_FDO
+	bool "wpebackend-fdo"
+	depends on BR2_PACKAGE_HAS_LIBEGL_WAYLAND
+	depends on BR2_PACKAGE_HAS_LIBGLES
+	depends on BR2_PACKAGE_WAYLAND
+	help
+	  Generic WPE backend which uses FreeDesktop.Org technologies.
+	  In particular, it should work with any EGL drivers which
+	  support the Wayland-EGL interface.
+
+	  TODO: Public URL
