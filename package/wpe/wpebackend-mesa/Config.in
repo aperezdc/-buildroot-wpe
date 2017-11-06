@@ -1,0 +1,40 @@
+comment "wpebackend-mesa requires mesa3d, wpebackend"
+	depends on !BR2_PACKAGE_MESA3D || !BR2_PACKAGE_WPEBACKEND
+
+config BR2_PACKAGE_WPEBACKEND_MESA
+	bool "wpebackend-mesa"
+	depends on BR2_PACKAGE_MESA3D
+	depends on BR2_PACKAGE_WPEBACKEND
+	select BR2_PACKAGE_LIBXKBCOMMON
+	help
+	  WPE backend which uses the Mesa3D library.
+
+	  https://github.com/WebPlatformForEmbedded/WPEBackend-mesa
+
+if BR2_PACKAGE_WPEBACKEND_MESA
+
+config BR2_PACKAGE_WPEBACKEND_MESA_GBM
+	bool "Use GBM for buffer sharing"
+	default y
+	help
+	  Whether to enable support for the libgbm-based buffer sharing.
+
+config BR2_PACKAGE_WPEBACKEND_MESA_GBM_EXPORTABLE_DMABUF
+	bool "Support the dma-buf backend"
+	default y
+	depends on BR2_PACKAGE_WPEBACKEND_MESA_GBM
+
+config BR2_PACKAGE_WPEBACKEND_MESA_WAYLAND_EGL
+	bool "Support Wayland-EGL (EXPERIMENTAL)"
+	default n
+	depends on BR2_PACKAGE_HAS_LIBEGL
+	depends on BR2_PACKAGE_HAS_LIBEGL_WAYLAND
+	help
+	  Enable experimental support for nested compositing using
+	  Wayland-EGL for buffer sharing.
+
+config BR2_PACKAGE_WPEBACKEND_MESA_TEGRA_QUIRKS
+	bool "Enable quirks for Nvidia Tegra devices"
+	default y if BR2_PACKAGE_NVIDIA_TEGRA23_BINARIES
+
+endif
