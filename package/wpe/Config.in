@@ -1,3 +1,4 @@
 source "package/wpe/wpewebkit/Config.in"
 source "package/wpe/wpebackend/Config.in"
+source "package/wpe/wpebackend-mesa/Config.in"
 source "package/wpe/dinghy/Config.in"
