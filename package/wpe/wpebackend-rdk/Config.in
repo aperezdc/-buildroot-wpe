@@ -1,0 +1,36 @@
+config BR2_PACKAGE_WPEBACKEND_RDK
+	bool "wpebackend-rdk"
+	depends on BR2_PACKAGE_RPI_USERLAND || BR2_PACKAGE_HAS_LIBEGL_WAYLAND
+	depends on BR2_PACKAGE_LIBINPUT
+	help
+	  RDK (http://rdkcentral.con) specific implementation of the
+	  WPE backend interfaces. Currently this backend can be built
+	  with support the VideoCore graphics chip in the Raspberry Pi
+	  (via dispmanx), or with generic support for Wayland-EGL.
+
+	  https://github.com/WebPlatformForEmbedded/WPEBackend-rdk
+
+if BR2_PACKAGE_WPEBACKEND_RDK
+
+choice
+	prompt "Hardware support"
+	default BR2_PACKAGE_WPEBACKEND_RDK_WAYLAND_EGL if BR2_PACKAGE_HAS_LIBEGL_WAYLAND
+	default BR2_PACKAGE_WPEBACKEND_RDK_BCM_RPI if BR2_PACKAGE_RPI_USERLAND
+
+config BR2_PACKAGE_WPEBACKEND_RDK_WAYLAND_EGL
+	bool "wayland-egl"
+	depends on BR2_PACKAGE_HAS_LIBEGL_WAYLAND
+	help
+	  Build generic support using the Wayland-EGL interface.
+
+config BR2_PACKAGE_WPEBACKEND_RDK_BCM_RPI
+	bool "bcm-rpi"
+	depends on BR2_PACKAGE_RPI_USERLAND
+	select BR2_PACKAGE_WPEBACKEND_RDK_INPUT_LIBINPUT
+	help
+	  Build support for the VideoCore graphics chip present in the
+	  Raspberry Pi family of devices using dispmanx.
+
+endchoice
+
+endif
