@@ -17,12 +17,6 @@ WPEWEBKIT_DEPENDENCIES = gstreamer1 gst1-libav gst1-plugins-base \
 	host-gperf harfbuzz icu jpeg libegl libepoxy libgcrypt libsecret \
 	libsoup libxml2 libxslt sqlite webp wpebackend
 WPEWEBKIT_CONF_OPTS = \
-	-DENABLE_API_TESTS=OFF \
-	-DENABLE_GEOLOCATION=OFF \
-	-DENABLE_GTKDOC=OFF \
-	-DENABLE_INTROSPECTION=OFF \
-	-DENABLE_MINIBROWSER=OFF \
-	-DENABLE_SPELLCHECK=OFF \
 	-DPORT=WPE
 
 # ARM needs NEON for JIT
