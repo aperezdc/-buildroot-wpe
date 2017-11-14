@@ -84,10 +84,4 @@ config BR2_PACKAGE_WPEWEBKIT_HTTPS
 comment "wpewebkit https support needs a toolchain w/ dynamic library"
 	depends on BR2_STATIC_LIBS
 
-config BR2_PACKAGE_WPEWEBKIT_WEBDRIVER
-	bool "WebDriver support"
-	help
-	  Enable support for WebDriver. This will build and install the
-	  WebKitWebDriver program in the target.
-
 endif
